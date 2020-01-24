@@ -112,7 +112,7 @@ class Safepay_Safepay_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function get_shared_secret()
     {
-        $key = Mage::getStoreConfig('payment/safepay/sandbox') ? 'payment/safepay/sandbox_webhook_secret' : 'payment/safepay/production_webhook_secret';
+        $key = Mage::getStoreConfig('payment/safepay/sandbox') ? Mage::getStoreConfig('payment/safepay/sandbox_webhook_secret') : Mage::getStoreConfig('payment/safepay/production_webhook_secret');
         return $key;
     }
 
@@ -136,5 +136,16 @@ class Safepay_Safepay_Helper_Data extends Mage_Core_Helper_Abstract
             return $baseURL;
         }
 
+        public function validate_signature($tracker, $signature)
+        {
+            $secret = $this->get_shared_secret();
+            $signature_2 = hash_hmac('sha256', $tracker, $secret);
+
+            if ($signature_2 === $signature) {
+                return true;
+            }
+
+            return false;
+        }
         
 }

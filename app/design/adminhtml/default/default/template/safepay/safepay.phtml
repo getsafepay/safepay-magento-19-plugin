@@ -1,0 +1,8 @@
+<?php echo $this->escapeHtml($this->getMethod()->getTitle());
+
+?>
+<?php if($this->getInfo()->getAdditionalInformation('tracker')): ?>
+    <?php echo "<br/>". $this->__('Tracker: '.$this->getInfo()->getAdditionalInformation('tracker'))."<br/>";?> 
+    <?php echo $this->__('Signature: '.$this->getInfo()->getAdditionalInformation('sig'))."<br/>";?> 
+    <?php echo $this->__('Reference: '.$this->getInfo()->getAdditionalInformation('reference'))."<br/>";?> 
+<?php endif; ?>
